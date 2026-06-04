@@ -3,12 +3,11 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: kivy/buildozer:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build with Buildozer
-        uses: mathijsvanderbijl/buildozer-action@v0.2
-        with:
-          args: android debug
-        env:
-          # Это единственный способ гарантированно принять все лицензии
-          ANDROID_ACCEPT_SDK_LICENSE: "True"
+      - name: Build
+        run: |
+          # В этом контейнере уже есть всё. Просто запускаем сборку.
+          buildozer android debug
