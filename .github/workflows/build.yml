@@ -8,5 +8,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Build
+        env:
+          BUILDOZER_ALLOW_ROOT: 1
         run: |
-          buildozer android debug
+          # Принудительно отключаем поиск SDK в интерактивном режиме
+          # и даем разрешение на использование root
+          buildozer --verbose android debug
