@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip
-          pip3 install --user --upgrade buildozer
-          # Принудительное принятие через yes
-          yes | buildozer android debug
+      - name: Build with Buildozer
+        uses: mathijsvanderbijl/buildozer-action@v0.2
+        with:
+          args: android debug
+        env:
+          # Это единственный способ гарантированно принять все лицензии
+          ANDROID_ACCEPT_SDK_LICENSE: "True"
