@@ -10,5 +10,5 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y python3-pip
           pip3 install --user --upgrade buildozer
-          # Прямая установка через buildozer, он сам скачает SDK при запуске
-          buildozer android debug
+          # Принудительное принятие через yes
+          yes | buildozer android debug
