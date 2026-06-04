@@ -9,5 +9,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build
         run: |
-          # В этом контейнере уже есть всё. Просто запускаем сборку.
           buildozer android debug
