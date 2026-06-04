@@ -3,13 +3,12 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
     steps:
       - uses: actions/checkout@v4
       - name: Build with Buildozer
-        run: |
-          docker run --rm -v $(pwd):/home/user/buildozer -w /home/user/buildozer buildozer/buildozer:latest buildozer android debug
+        uses: docker://buildozer/buildozer:latest
+        with:
+          args: buildozer android debug
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
