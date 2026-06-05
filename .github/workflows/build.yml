@@ -3,22 +3,13 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: kivy/buildozer:latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: temurin
-          java-version: 17
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip git zip autoconf automake libtool pkg-config
-          pip3 install buildozer cython
       - name: Build APK
-        env:
-          BUILDOZER_ALLOW_ROOT: 1
-        run: buildozer android debug 2>&1
+        run: |
+          buildozer android debug 2>&1
       - uses: actions/upload-artifact@v4
         with:
           name: app
