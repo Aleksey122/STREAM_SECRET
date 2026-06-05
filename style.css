@@ -1,0 +1,5 @@
+body { margin: 0; display: flex; flex-direction: column; height: 100vh; background: #000; color: #fff; font-family: sans-serif; }
+#chat-container { flex: 1; overflow-y: auto; padding: 20px; }
+.msg { padding: 10px; border-radius: 10px; background: #222; margin-bottom: 10px; }
+.input-area { padding: 10px; background: #111; display: flex; }
+input { flex: 1; background: #333; color: white; border: none; padding: 10px; }
