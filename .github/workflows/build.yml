@@ -19,8 +19,11 @@ jobs:
         env:
           BUILDOZER_ALLOW_ROOT: 1
         run: |
-          yes | buildozer android debug 2>&1
+          buildozer android debug 2>&1 | tee build.log || true
+          grep -i "error\|failed\|exception" build.log | tail -30
+          exit 1
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
-          name: app
-          path: bin/*.apk
+          name: build-log
+          path: build.log
