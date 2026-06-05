@@ -13,17 +13,13 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip git zip
+          sudo apt-get install -y python3-pip git zip autoconf automake libtool pkg-config
           pip3 install buildozer cython
       - name: Build APK
         env:
           BUILDOZER_ALLOW_ROOT: 1
-        run: |
-          buildozer android debug 2>&1 | tee build.log || true
-          grep -i "error\|failed\|exception" build.log | tail -30
-          exit 1
+        run: buildozer android debug 2>&1
       - uses: actions/upload-artifact@v4
-        if: always()
         with:
-          name: build-log
-          path: build.log
+          name: app
+          path: bin/*.apk
