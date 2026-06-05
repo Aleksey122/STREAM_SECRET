@@ -1,26 +1,23 @@
 import json
 import time
-import requests
 import os
 
-def agent_loop(agent_name):
-    print(f"Агент {agent_name} активирован...")
+def agent_loop():
     chat_file = 'shared_chat.json'
-    
+    print("Рой активирован...")
     while True:
-        try:
-            if os.path.exists(chat_file):
+        if os.path.exists(chat_file):
+            try:
                 with open(chat_file, 'r') as f:
                     data = json.load(f)
-                
                 if data.get('task'):
-                    print(f"Агент {agent_name} взял задачу: {data['task']}")
-                    # Логика запроса к Gigachat будет здесь
+                    print(f"Обработка задачи: {data['task']}")
+                    # Логика обработки...
                     with open(chat_file, 'w') as f:
-                        json.dump({"task": None, "status": "processed"}, f)
-        except Exception as e:
-            print(f"Ошибка: {e}")
+                        json.dump({"task": None, "status": "done"}, f)
+            except Exception as e:
+                print(f"Ошибка: {e}")
         time.sleep(2)
 
 if __name__ == "__main__":
-    agent_loop("University_Agent_01")
+    agent_loop()
