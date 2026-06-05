@@ -5,17 +5,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: temurin
+          java-version: 17
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip git zip openjdk-17-jdk
+          sudo apt-get install -y python3-pip git zip
           pip3 install buildozer cython
+      - name: Accept Android licenses
+        run: |
+          mkdir -p ~/.android
+          touch ~/.android/repositories.cfg
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
       - name: Build APK
         env:
           BUILDOZER_ALLOW_ROOT: 1
-        run: |
-          cd $GITHUB_WORKSPACE
-          buildozer android debug
+        run: buildozer android debug
       - uses: actions/upload-artifact@v4
         with:
           name: app
