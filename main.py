@@ -1,11 +1,20 @@
 from kivymd.app import MDApp
 from kivy.lang import Builder
 
-class MaxAIApp(MDApp):
+KV = '''
+MDScreen:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: "TrollBox"
+        MDLabel:
+            text: "Система готова"
+            halign: "center"
+'''
+
+class TrollBoxApp(MDApp):
     def build(self):
-        self.theme_cls.theme_style = "Dark"
-        self.theme_cls.primary_palette = "Blue"
-        return Builder.load_file("chat_ui.kv")
+        return Builder.load_string(KV)
 
 if __name__ == '__main__':
-    MaxAIApp().run()
+    TrollBoxApp().run()
