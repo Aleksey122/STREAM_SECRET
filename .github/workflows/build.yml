@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build with Buildozer
         run: |
-          docker run --rm -v $(pwd):/home/user/host -e BUILDOZER_ALLOW_ROOT=1 kivy/buildozer bash -c "yes | python3 -m buildozer android debug"
+          docker run --rm -v $(pwd):/home/user/host -e BUILDOZER_ALLOW_ROOT=1 -e BUILDOZER_NO_CHECK_ROOT=1 kivy/buildozer buildozer android debug
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
