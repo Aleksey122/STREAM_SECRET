@@ -15,3 +15,8 @@ android.accept_sdk_license = True
 
 [buildozer]
 log_level = 2
+
+android.keystore = max_ai.keystore
+android.keystore_passwd = maxai123
+android.keyalias = max_ai
+android.keyalias_passwd = maxai123
