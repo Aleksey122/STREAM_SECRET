@@ -1,3 +1,4 @@
+from kivy.lang import Builder
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
@@ -13,6 +14,7 @@ Window.clearcolor = (0.05, 0.05, 0.05, 1)
 
 class ChatApp(App):
     def build(self):
+        Builder.load_file("chat_ui.kv")
         self.history = []
         root = BoxLayout(orientation='vertical', padding=8, spacing=6)
         title = Label(text='MAX AI', size_hint_y=None, height=40,
