@@ -8,6 +8,7 @@ version = 0.1
 requirements = python3,kivy,requests
 android.permissions = INTERNET
 android.api = 33
+android.softinput_mode = adjustResize
 android.minapi = 21
 android.sdk = 33
 android.build_tools_version = 33.0.2
