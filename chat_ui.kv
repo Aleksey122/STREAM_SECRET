@@ -1,18 +1,32 @@
-<ChatBubble@BoxLayout>:
+BoxLayout:
     orientation: 'vertical'
     padding: 10
-    size_hint_y: None
-    height: self.minimum_height
+    spacing: 10
     canvas.before:
         Color:
-            rgba: (0.2, 0.2, 0.2, 1) if self.is_bot else (0.1, 0.4, 0.8, 1)
-        RoundedRectangle:
-            size: self.size
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
             pos: self.pos
-            radius: [15, 15, 15, 15]
+            size: self.size
 
     Label:
-        text: root.text
-        text_size: self.width, None
+        text: 'MAX AI'
         size_hint_y: None
-        height: self.texture_size[1]
+        height: 40
+        color: 0, 1, 0, 1
+
+    ScrollView:
+        BoxLayout:
+            id: chat_container
+            orientation: 'vertical'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: 10
+            spacing: 10
+
+    TextInput:
+        id: message_input
+        size_hint_y: None
+        height: 50
+        multiline: False
+        hint_text: 'Введите сообщение...'
