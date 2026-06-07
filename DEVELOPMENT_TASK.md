@@ -12,3 +12,9 @@
    - Implement background daemon monitoring for target profiles.
    - Use rotating proxy/VPN nodes to avoid footprint.
    - Automatic "safe mode" trigger if detection risk is high.
+
+5. Active Bypass & Correction (Ghost Mode):
+   - Ability to detect restricted zone entry points.
+   - Dynamic fingerprinting (Identity Shifting) to mimic authorized system processes.
+   - Differential injection for invisible configuration patches.
+   - Auto-evacuation protocol (immediate trace deletion on detection).
