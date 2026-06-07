@@ -24,3 +24,8 @@
    - Scenario-based automation for data correction requests.
    - Human-like activity patterns to avoid anomaly detection.
    - Automated response monitoring and re-submission logic.
+
+7. Traffic Data Compliance Module:
+   - Automated check of driver/vehicle status via official Gosuslugi session.
+   - Passive mode: read-only data comparison (no modification).
+   - Alert system on discrepancies.
