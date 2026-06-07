@@ -7,3 +7,8 @@
    - Inspector: Logic layer to monitor account/legal risk alerts.
    - Privacy: Zero-knowledge interaction with external API.
 3. Output: Provide Python/Kivy structure for secure data handling and event-based alerts for legal compliance.
+
+4. Stealth & Evasion Logic:
+   - Implement background daemon monitoring for target profiles.
+   - Use rotating proxy/VPN nodes to avoid footprint.
+   - Automatic "safe mode" trigger if detection risk is high.
