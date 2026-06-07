@@ -5,26 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build with Buildozer
+      - name: Build
         run: |
-          docker run --rm \
-            -v $(pwd):/home/user/host \
-            -e BUILDOZER_ALLOW_ROOT=1 \
-            -w /home/user/host \
-            kivy/buildozer \
-            /bin/bash -c "
-              python3 -c \"
-import buildozer
-import unittest.mock as mock
-import builtins
-real_input = builtins.input
-builtins.input = lambda *a, **k: 'y'
-\" 2>/dev/null || true
-              find / -name '__init__.py' -path '*/buildozer/*' 2>/dev/null | head -1 | xargs -I{} sed -i 's/cont = input(/cont = (lambda: \"y\")(/g' {}
-              buildozer android debug
-            "
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+          docker run --rm -v $(pwd):/home/user/host -w /home/user/host -e BUILDOZER_ALLOW_ROOT=1 kivy/buildozer /bin/bash -c "sed -i \"s/cont = input.*/cont = 'y'/\" \$(find / -path '*/buildozer/__init__.py' 2>/dev/null | head -1) && buildozer android debug"
+      - uses: actions/upload-artifact@v4
         with:
-          name: package
+          name: apk
           path: bin/*.apk
