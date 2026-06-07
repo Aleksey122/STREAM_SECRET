@@ -40,3 +40,10 @@ class InspectorBase:
         else:
             print("[!] Внимание: Обнаружено препятствие или ограничение!")
             return False
+
+    def analyze_data(self, html_content, search_pattern):
+        """Поиск неточностей в данных (поиск по паттерну)"""
+        print(f"[+] Сканирование данных на предмет: {search_pattern}...")
+        if search_pattern.lower() in html_content.lower():
+            return "MATCH_FOUND: Неточность обнаружена!"
+        return "CLEAN: Данные в норме."
