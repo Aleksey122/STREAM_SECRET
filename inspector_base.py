@@ -24,3 +24,19 @@ class InspectorBase:
 
     def get_status(self):
         return "System Active: Stealth Mode Engaged"
+
+    def silent_read(self, target_url):
+        """Безопасное чтение данных без кэширования на диске"""
+        print(f"[+] Анализ целевой зоны: {target_url}...")
+        self.human_delay(min_sec=3, max_sec=5)
+        
+        # Запрос в режиме сессии
+        response = self.session.get(target_url, allow_redirects=True)
+        
+        # Проверка ответа без записи в логи
+        if response.status_code == 200:
+            print("[+] Данные получены. Обработка в памяти...")
+            return True
+        else:
+            print("[!] Внимание: Обнаружено препятствие или ограничение!")
+            return False
