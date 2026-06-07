@@ -7,12 +7,22 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build with Buildozer
         run: |
-          echo "y" | docker run --rm -i \
+          docker run --rm \
             -v $(pwd):/home/user/host \
             -e BUILDOZER_ALLOW_ROOT=1 \
             -w /home/user/host \
             kivy/buildozer \
-            buildozer android debug
+            /bin/bash -c "
+              python3 -c \"
+import buildozer
+import unittest.mock as mock
+import builtins
+real_input = builtins.input
+builtins.input = lambda *a, **k: 'y'
+\" 2>/dev/null || true
+              find / -name '__init__.py' -path '*/buildozer/*' 2>/dev/null | head -1 | xargs -I{} sed -i 's/cont = input(/cont = (lambda: \"y\")(/g' {}
+              buildozer android debug
+            "
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
