@@ -2,7 +2,7 @@ name: Build APK
 on: [push]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
 
@@ -14,21 +14,12 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+          sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev cmake libffi-dev libssl-dev
           pip install buildozer cython
 
-      - name: Patch buildozer
+      - name: Patch buildozer root check
         run: |
-          python3 -c "
-          import glob
-          for f in glob.glob('/opt/hostedtoolcache/Python/3.11*/x64/lib/python3.11/site-packages/buildozer/__init__.py') + glob.glob('/usr/local/lib/python*/dist-packages/buildozer/__init__.py') + glob.glob('/home/runner/.local/lib/python*/site-packages/buildozer/__init__.py'):
-              txt = open(f).read()
-              if \"cont = input(\" in txt:
-                  txt = txt.replace(\"cont = input('Are you sure you want to continue [y/n]? ')\", \"cont = 'y'\")
-                  open(f,'w').write(txt)
-                  print('Patched:', f)
-          "
-          find / -path '*/buildozer/__init__.py' 2>/dev/null | xargs grep -l "cont = input" | xargs -I{} sed -i "s/cont = input.*/cont = 'y'/" {}
+          find / -path '*/buildozer/__init__.py' 2>/dev/null | xargs -I{} sed -i "s/cont = input.*/cont = 'y'/" {}
 
       - name: Build APK
         run: |
