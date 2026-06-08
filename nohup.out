@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/usr/local/bin/uvicorn", line 5, in <module>
+    from uvicorn.main import main
+ModuleNotFoundError: No module named 'uvicorn'
+INFO:     Started server process [11781]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:39146 - "GET /health HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11781]
