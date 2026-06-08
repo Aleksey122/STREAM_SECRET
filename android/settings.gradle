@@ -1,2 +1,3 @@
 rootProject.name = 'maxai'
 include ':app'
+pluginManagement { repositories { google(); mavenCentral() } }
