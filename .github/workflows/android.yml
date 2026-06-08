@@ -11,9 +11,12 @@ steps:
 with:
 java-version: '17'
 distribution: 'temurin'
+- uses: gradle/gradle-build-action@v2
+with:
+gradle-version: '8.4'
 - name: Build APK
 working-directory: android
-run: chmod +x gradlew && ./gradlew assembleDebug
+run: gradle wrapper && ./gradlew assembleDebug
 - uses: actions/upload-artifact@v3
 with:
 name: maxai-debug
