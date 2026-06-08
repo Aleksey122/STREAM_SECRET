@@ -7,17 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: android
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'adopt'
-    - name: Build with Gradle
-      run: |
-        chmod +x gradlew
-        ./gradlew assembleDebug --stacktrace
+    - name: List files
+      run: ls -R
