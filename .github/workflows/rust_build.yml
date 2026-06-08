@@ -9,7 +9,13 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android
-      - name: Build Library
+      - name: Build with cargo-ndk
         run: |
+          cargo install cargo-ndk
           cd rust_core
-          cargo build --target aarch64-linux-android --release
+          cargo ndk -t arm64-v8a -o ./libs build --release
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: librust_core
+          path: rust_core/libs/arm64-v8a/librust_core.so
