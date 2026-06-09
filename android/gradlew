@@ -1,2 +1,2 @@
-#!/bin/sh
-java -jar "$(dirname "$0")/gradle/wrapper/gradle-wrapper.jar" "$@"
+#!/usr/bin/env bash
+gradle "$@"
