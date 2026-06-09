@@ -8,8 +8,8 @@ jobs:
       - name: Install Rust
         run: rustup target add aarch64-linux-android
       - name: Build
-        run: cargo build --release --target aarch64-linux-android
-        working-directory: rust_core
+        # Запускаем сборку из корня, указывая путь к Cargo.toml
+        run: cargo build --manifest-path rust_core/Cargo.toml --target aarch64-linux-android --release
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
