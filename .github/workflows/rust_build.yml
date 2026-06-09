@@ -7,11 +7,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Rust
         run: rustup target add aarch64-linux-android
+      - name: List files
+        run: ls -R
       - name: Build
-        # Запускаем сборку из корня, указывая путь к Cargo.toml
-        run: cargo build --manifest-path rust_core/Cargo.toml --target aarch64-linux-android --release
+        run: cargo build --target aarch64-linux-android --release
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: librust_core
-          path: rust_core/target/aarch64-linux-android/release/librust_core.so
+          path: target/aarch64-linux-android/release/librust_core.so
