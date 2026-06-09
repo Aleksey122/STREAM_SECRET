@@ -8,10 +8,13 @@ jobs:
       - name: Install Rust
         run: rustup target add aarch64-linux-android
       - name: Build
-        run: cargo build --release --target aarch64-linux-android
-        working-directory: rust_core
+        run: |
+          # Находим папку, где лежит Cargo.toml
+          PROJECT_DIR=$(find . -name Cargo.toml -exec dirname {} \;)
+          echo "Building in $PROJECT_DIR"
+          cargo build --release --target aarch64-linux-android --manifest-path $PROJECT_DIR/Cargo.toml
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: librust_core
-          path: rust_core/target/aarch64-linux-android/release/librust_core.so
+          path: '**/librust_core.so'
