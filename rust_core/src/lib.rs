@@ -1,2 +1,4 @@
 #[no_mangle]
-pub extern "C" fn hello() {}
+pub extern "C" fn hello() {
+    // Логика будет здесь
+}
