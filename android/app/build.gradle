@@ -2,7 +2,8 @@ plugins {
     id "com.android.application"
 }
 plugins {
-    id 'com.android.application'
+}
+plugins {
     id 'org.jetbrains.kotlin.android'
 }
 android {
