@@ -5,16 +5,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Show directory structure
+        run: ls -R  # ЭТО ПОКАЖЕТ НАМ ВСЕ ФАЙЛЫ В ЛОГАХ
+        
       - name: Install Rust
         run: rustup target add aarch64-linux-android
+        
       - name: Build
-        run: |
-          # Находим папку, где лежит Cargo.toml
-          PROJECT_DIR=$(find . -name Cargo.toml -exec dirname {} \;)
-          echo "Building in $PROJECT_DIR"
-          cargo build --release --target aarch64-linux-android --manifest-path $PROJECT_DIR/Cargo.toml
+        run: cargo build --release --target aarch64-linux-android --manifest-path rust_core/Cargo.toml
+        
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: librust_core
-          path: '**/librust_core.so'
+          path: rust_core/target/aarch64-linux-android/release/librust_core.so
