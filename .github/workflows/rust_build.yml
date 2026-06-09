@@ -5,16 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
-      - name: Show directory structure
-        run: ls -R  # ЭТО ПОКАЖЕТ НАМ ВСЕ ФАЙЛЫ В ЛОГАХ
-        
       - name: Install Rust
         run: rustup target add aarch64-linux-android
-        
       - name: Build
-        run: cargo build --release --target aarch64-linux-android --manifest-path rust_core/Cargo.toml
-        
+        run: |
+          cd rust_core
+          cargo build --release --target aarch64-linux-android
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
