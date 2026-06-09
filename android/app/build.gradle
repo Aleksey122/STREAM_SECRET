@@ -1,15 +1,16 @@
-plugins {
-    id 'com.android.application'
-}
+apply plugin: 'com.android.application'
 
 android {
-    namespace 'com.example.stream_secret'
-    compileSdk 34
+    compileSdkVersion 33
     defaultConfig {
-        applicationId 'com.example.stream_secret'
-        minSdk 21
-        targetSdk 34
+        applicationId "com.example.stream_secret"
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
-        versionName '1.0'
+        versionName "1.0"
     }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 }
