@@ -1,0 +1,25 @@
+MDScreen:
+    MDBoxLayout:
+        orientation: 'vertical'
+        MDTopAppBar:
+            title: "MAX AI"
+            elevation: 4
+        ScrollView:
+            MDBoxLayout:
+                id: chat_list
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: "10dp"
+                spacing: "10dp"
+        MDBoxLayout:
+            size_hint_y: None
+            height: "60dp"
+            padding: "10dp"
+            spacing: "10dp"
+            MDTextField:
+                id: input_field
+                hint_text: "Введите сообщение..."
+            MDIconButton:
+                icon: "send"
+                on_release: chat_list.add_widget(MDLabel(text=input_field.text))
