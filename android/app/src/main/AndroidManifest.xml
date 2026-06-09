@@ -3,5 +3,14 @@
     package="com.example.stream_secret">
     <application
         android:label="Stream Secret"
-        android:theme="@android:style/Theme.NoTitleBar" />
+        android:theme="@android:style/Theme.NoTitleBar"
+        android:exported="true">
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>
