@@ -5,5 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install Rust
+        run: rustup target add aarch64-linux-android
       - name: Build
-        run: echo "Rust build started"
+        run: cargo build --target aarch64-linux-android --release
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: librust_core
+          path: target/aarch64-linux-android/release/librust_core.so
