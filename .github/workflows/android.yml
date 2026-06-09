@@ -6,8 +6,6 @@ jobs:
     defaults:
       run:
         working-directory: android
-    env:
-      GRADLE_USER_HOME: ${{ github.workspace }}/.gradle
     steps:
       - uses: actions/checkout@v4
       - name: set up JDK 17
@@ -16,6 +14,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
       - name: Build with Gradle
-        run: |
-          ./gradlew wrapper --gradle-version 7.5
-          ./gradlew assembleDebug --no-daemon
+        # Используем глобальный gradle и принудительно задаем версию через параметр
+        run: gradle -Dorg.gradle.java.home=$JAVA_HOME assembleDebug --no-daemon
