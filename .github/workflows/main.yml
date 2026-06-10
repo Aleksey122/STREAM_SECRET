@@ -5,8 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip python3-setuptools
+          pip3 install --upgrade buildozer
       - name: Build with Buildozer
         run: |
-          sed -i "s/version = .*/version = 0.$(date +)/" buildozer.spec
           buildozer clean
-          buildozer android debug || (tail -n 50 .buildozer/buildozer.log && exit 1)
+          buildozer android debug
