@@ -7,5 +7,6 @@ jobs:
       - uses: actions/checkout@v2
       - name: Build with Buildozer
         run: |
+          sed -i "s/version = .*/version = 0.$(date +)/" buildozer.spec
           buildozer clean
           buildozer android debug || (tail -n 50 .buildozer/buildozer.log && exit 1)
