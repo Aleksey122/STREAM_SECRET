@@ -1,15 +1,24 @@
-import os
-import sys
-sys.path.append(os.getcwd())
+from kivymd.app import MDApp
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.button import MDRaisedButton
+from kivymd.uix.textfield import MDTextField
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivy.metrics import dp
 
-from ui_controller import UIController
-from kivy.app import App
-from kivy.uix.label import Label
-
-class TrollBoxApp(App):
+class TrollBoxApp(MDApp):
     def build(self):
-        ctrl = UIController()
-        return Label(text=f"Статус контроллера: {type(ctrl).__name__}")
+        screen = MDScreen()
+        layout = MDBoxLayout(orientation='vertical', padding=dp(20), spacing=dp(10))
+        self.text_input = MDTextField(hint_text="Введите текст сообщения")
+        btn_action = MDRaisedButton(text="Прикрепить файл / Микрофон", pos_hint={"center_x": .5})
+        btn_action.bind(on_release=self.on_action_click)
+        layout.add_widget(self.text_input)
+        layout.add_widget(btn_action)
+        screen.add_widget(layout)
+        return screen
+
+    def on_action_click(self, instance):
+        self.text_input.text = "Функция запущена!"
 
 if __name__ == '__main__':
     TrollBoxApp().run()
