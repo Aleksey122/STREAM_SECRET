@@ -17,22 +17,20 @@ jobs:
           sudo apt update
           sudo apt install -y python3-pip python3-setuptools autoconf automake libtool wget unzip
           pip3 install --upgrade buildozer cython
-      - name: Setup Android SDK for buildozer
+      - name: Setup Android SDK
         run: |
-          export BUILDOZER_ALLOW_ROOT=1
           SDK_DIR=$HOME/.buildozer/android/platform/android-sdk
           mkdir -p $SDK_DIR/cmdline-tools
           wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O /tmp/cmdtools.zip
           unzip -q /tmp/cmdtools.zip -d /tmp/cmdtools
           mv /tmp/cmdtools/cmdline-tools $SDK_DIR/cmdline-tools/latest
           mkdir -p $SDK_DIR/licenses
-          echo "24333f15532b47ef2ea9845eab0d94765db16e1c" > $SDK_DIR/licenses/android-sdk-license
-          echo "84831b9409646a918e30573bab4c9c91346d8abd" >> $SDK_DIR/licenses/android-sdk-license
+          printf "24333f15532b47ef2ea9845eab0d94765db16e1c\n8933bad161af4178b1185d1a37fbf41ea5269c55\n" > $SDK_DIR/licenses/android-sdk-license
           yes | $SDK_DIR/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_DIR --licenses || true
-          yes | $SDK_DIR/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_DIR "build-tools;37.0.0" "platforms;android-33" || true
-          ln -sf $SDK_DIR/cmdline-tools/latest/bin/sdkmanager $SDK_DIR/tools/bin/sdkmanager 2>/dev/null || true
+          yes | $SDK_DIR/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_DIR "build-tools;37.0.0" "platforms;android-33" "platform-tools" || true
           mkdir -p $SDK_DIR/tools/bin
-          cp $SDK_DIR/cmdline-tools/latest/bin/sdkmanager $SDK_DIR/tools/bin/sdkmanager || true
+          printf '#!/bin/bash\nexec %s/cmdline-tools/latest/bin/sdkmanager "$@"\n' "$SDK_DIR" > $SDK_DIR/tools/bin/sdkmanager
+          chmod +x $SDK_DIR/tools/bin/sdkmanager
       - name: Build APK
         run: |
           export BUILDOZER_ALLOW_ROOT=1
