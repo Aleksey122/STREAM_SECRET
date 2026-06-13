@@ -7,11 +7,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip python3-setuptools openjdk-17-jdk autoconf automake libtool
+          sudo apt install -y python3-pip python3-setuptools autoconf automake libtool
           pip3 install --upgrade buildozer cython
+      - name: Accept SDK licenses
+        run: |
+          mkdir -p $HOME/.android
+          touch $HOME/.android/repositories.cfg
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0" "platforms;android-33" || true
       - name: Build APK
         run: |
           export BUILDOZER_ALLOW_ROOT=1
