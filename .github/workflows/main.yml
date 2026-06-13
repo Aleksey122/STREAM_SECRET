@@ -15,16 +15,27 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt update
-          sudo apt install -y python3-pip python3-setuptools autoconf automake libtool
+          sudo apt install -y python3-pip python3-setuptools autoconf automake libtool wget unzip
           pip3 install --upgrade buildozer cython
+      - name: Setup Android SDK for buildozer
+        run: |
+          export BUILDOZER_ALLOW_ROOT=1
+          SDK_DIR=$HOME/.buildozer/android/platform/android-sdk
+          mkdir -p $SDK_DIR/cmdline-tools
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O /tmp/cmdtools.zip
+          unzip -q /tmp/cmdtools.zip -d /tmp/cmdtools
+          mv /tmp/cmdtools/cmdline-tools $SDK_DIR/cmdline-tools/latest
+          mkdir -p $SDK_DIR/licenses
+          echo "24333f15532b47ef2ea9845eab0d94765db16e1c" > $SDK_DIR/licenses/android-sdk-license
+          echo "84831b9409646a918e30573bab4c9c91346d8abd" >> $SDK_DIR/licenses/android-sdk-license
+          yes | $SDK_DIR/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_DIR --licenses || true
+          yes | $SDK_DIR/cmdline-tools/latest/bin/sdkmanager --sdk_root=$SDK_DIR "build-tools;37.0.0" "platforms;android-33" || true
+          ln -sf $SDK_DIR/cmdline-tools/latest/bin/sdkmanager $SDK_DIR/tools/bin/sdkmanager 2>/dev/null || true
+          mkdir -p $SDK_DIR/tools/bin
+          cp $SDK_DIR/cmdline-tools/latest/bin/sdkmanager $SDK_DIR/tools/bin/sdkmanager || true
       - name: Build APK
         run: |
           export BUILDOZER_ALLOW_ROOT=1
-          mkdir -p ~/.buildozer/android/platform/android-sdk/licenses
-          echo "24333f15532b47ef2ea9845eab0d94765db16e1c" > ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo "84831b9409646a918e30573bab4c9c91346d8abd" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-license
-          echo "d8aa0f1305ad0a244a1aaf103d7aa4604ea9fd18" >> ~/.buildozer/android/platform/android-sdk/licenses/android-googletv-license
-          echo "601085b94cd77f0b54ff86406957099ebe79c4d" >> ~/.buildozer/android/platform/android-sdk/licenses/android-sdk-preview-license
           buildozer android debug
       - name: Upload APK
         uses: actions/upload-artifact@v4
