@@ -1,21 +1,23 @@
 name: Build APK
-on: [push]
+on:
+  push:
+    branches: [ main ]
 jobs:
-build:
-runs-on: ubuntu-latest
-steps:
-- uses: actions/checkout@v2
-- name: Install dependencies
-run: |
-sudo apt update
-sudo apt install -y python3-pip python3-setuptools
-pip3 install --upgrade buildozer
-- name: Build APK
-run: |
-export BUILDOZER_ALLOW_ROOT=1
-buildozer android debug
-- name: Upload APK
-uses: actions/upload-artifact@v4
-with:
-name: app-debug
-path: bin/*.apk
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y python3-pip python3-setuptools
+          pip3 install --upgrade buildozer
+      - name: Build APK
+        run: |
+          export BUILDOZER_ALLOW_ROOT=1
+          buildozer android debug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug
+          path: bin/*.apk
