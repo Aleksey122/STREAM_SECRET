@@ -22,7 +22,7 @@ jobs:
           mkdir -p $HOME/.android
           touch $HOME/.android/repositories.cfg
           yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses || true
-          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "build-tools;34.0.0" "platforms;android-33" || true
+          yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager "build-tools;37.0.0" "platforms;android-33" || true
       - name: Build APK
         run: |
           export BUILDOZER_ALLOW_ROOT=1
