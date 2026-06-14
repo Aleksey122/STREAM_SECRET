@@ -1,6 +1,6 @@
 [app]
 title = LinkNode Admin
-package.name = linknodeadmin
+package.name = maxai
 version = 1.0
 package.domain = org.linknode
 source.dir = .
